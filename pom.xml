@@ -5,6 +5,14 @@
     <groupId>com.fennel.aceintervirew</groupId>
     <artifactId>aceinterview</artifactId>
     <version>0.01-SNAPSHOT</version>
+    <name>aceinterview</name>
+    <packaging>pom</packaging>
 
-
+    <modules>
+        <module>ace-content</module>
+        <module>ace-member</module>
+        <module>ace-question</module>
+        <module>ace-study</module>
+        <module>ace-channel</module>
+    </modules>
 </project>
