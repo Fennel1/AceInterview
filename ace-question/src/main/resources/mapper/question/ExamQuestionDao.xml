@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fennel.aceinterview.question.dao.ExamQuestionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.fennel.aceinterview.question.entity.ExamQuestionEntity" id="examQuestionMap">
+        <result property="id" column="id"/>
+        <result property="question" column="question"/>
+        <result property="chooseA" column="choose_a"/>
+        <result property="chooseB" column="choose_b"/>
+        <result property="chooseC" column="choose_c"/>
+        <result property="chooseD" column="choose_d"/>
+        <result property="rightChoose" column="right_choose"/>
+        <result property="type" column="type"/>
+        <result property="multiple" column="multiple"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="enable" column="enable"/>
+    </resultMap>
+
+
+</mapper>

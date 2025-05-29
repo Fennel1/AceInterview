@@ -1,4 +1,4 @@
-package com.fennel.aceintervirew.acechannel;
+package com.fennel.aceinterview.acechannel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

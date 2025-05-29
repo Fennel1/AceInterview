@@ -1,4 +1,4 @@
-package com.fennel.aceintervirew.acecontent;
+package com.fennel.aceinterview.acecontent;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

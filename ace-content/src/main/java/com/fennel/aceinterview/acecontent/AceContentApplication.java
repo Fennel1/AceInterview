@@ -1,4 +1,4 @@
-package com.fennel.aceintervirew.acecontent;
+package com.fennel.aceinterview.acecontent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

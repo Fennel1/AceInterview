@@ -1,4 +1,4 @@
-package com.fennel.aceinterview.acequestion;
+package com.fennel.aceinterview;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
