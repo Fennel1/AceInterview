@@ -14,7 +14,6 @@ import io.renren.utils.Query;
 import io.renren.utils.R;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,9 +31,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/sys/generator")
 public class SysGeneratorController {
-
 	@Autowired
-	@Lazy
 	private SysGeneratorService sysGeneratorService;
 	
 	/**

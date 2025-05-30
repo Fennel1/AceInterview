@@ -1,5 +1,5 @@
 server:
-  port: 8007
+  port: 80
 
 # mysql
 spring:
@@ -7,7 +7,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ace_qms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/ace_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: fennel
     password: 123456
     #oracle配置
@@ -25,17 +25,14 @@ spring:
   #    url: jdbc:postgresql://192.168.10.10:5432/renren_fast
   #    username: postgres
   #    password: 123456
-  main:
-    allow-circular-references: true
 
 
 
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-  web:
-    resources:
-      static-locations: classpath:/static/,classpath:/views/
+  resources:
+    static-locations: classpath:/static/,classpath:/views/
 
 #mongodb:
 #  host: localhost
