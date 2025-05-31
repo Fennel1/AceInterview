@@ -17,5 +17,10 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+logging:
+  level:
+    com.alibaba.nacos: DEBUG
+    com.alibaba.cloud.nacos: DEBUG
+
 server:
   port: 8400

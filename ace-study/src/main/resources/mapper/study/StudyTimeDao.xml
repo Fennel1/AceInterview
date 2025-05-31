@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.fennel.aceinterview.study.entity.StudyTimeEntity" id="studyTimeMap">
         <result property="id" column="id"/>
-        <result property="quesType" column="ques_type"/>
+        <result property="quesTypeId" column="ques_type_id"/>
         <result property="memberId" column="member_id"/>
         <result property="totalTime" column="total_time"/>
         <result property="delFlag" column="del_flag"/>

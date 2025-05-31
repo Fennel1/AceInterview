@@ -27,7 +27,7 @@ public class StudyTimeEntity implements Serializable {
 	/**
 	 * 题目类型id
 	 */
-	private Long quesType;
+	private Long quesTypeId;
 	/**
 	 * 用户id
 	 */
@@ -48,5 +48,4 @@ public class StudyTimeEntity implements Serializable {
 	 * 更新时间
 	 */
 	private Date updateTime;
-
 }
