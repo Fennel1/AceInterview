@@ -22,6 +22,7 @@
         <module>ace-study</module>
         <module>ace-channel</module>
         <module>ace-common</module>
+        <module>ace-gateway</module>
 
         <module>renren-fast</module>
         <module>renren-generator</module>
