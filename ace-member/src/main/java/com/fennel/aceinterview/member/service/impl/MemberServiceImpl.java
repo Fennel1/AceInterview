@@ -26,4 +26,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         return new PageUtils(page);
     }
 
+
+    @Override
+    public MemberEntity getMemberByUserId(String userId) {
+        return baseMapper.getMemberByUserId(userId);
+    }
 }

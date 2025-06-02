@@ -2,14 +2,30 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: route_qq
-          uri: http://www.qq.com
+        - id: route_auth
+          uri: lb://ace-auth
           predicates:
-            - Query=url,qq
-        - id: route_baidu
-          uri: http://www.baidu.com
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - JwtAuthCheckFilter
+
+        - id: route_member
+          uri: lb://ace-member
           predicates:
-            - Query=url,baidu
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - JwtAuthCheckFilter
+
+        - id: route_question
+          uri: lb://ace-question
+          predicates:
+            - Path=/api/question/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - JwtAuthCheckFilter
+
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
@@ -18,6 +34,8 @@ spring:
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  profiles:
+    include: jwt
 
 server:
   port: 8050

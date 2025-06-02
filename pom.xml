@@ -21,8 +21,11 @@
         <module>ace-question</module>
         <module>ace-study</module>
         <module>ace-channel</module>
-        <module>ace-common</module>
         <module>ace-gateway</module>
+        <module>ace-auth</module>
+
+        <module>ace-common</module>
+        <module>ace-jwt</module>
 
         <module>renren-fast</module>
         <module>renren-generator</module>

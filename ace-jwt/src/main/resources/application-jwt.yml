@@ -1,0 +1,19 @@
+spring:
+  profiles: jwt
+  redis:
+    host: 127.0.0.1       # Redis 服务地址（如果是 Docker，请写宿主机 IP）
+    port: 6521            # Redis 服务端口
+    password: 123456      # 如果设置了密码
+    database: 0           # 默认数据库
+    timeout: 5000         # 连接超时时间（单位毫秒）
+
+aceinterview:
+  jwt:
+    enabled: true   # 是否开启JWT登录认证功能
+    secret: aceinterview  # JWT 私钥，用于校验JWT令牌的合法性
+    expiration: 3600000 # JWT 令牌的有效期，用于校验JWT令牌的合法性，一个小时
+    header: Authorization # HTTP 请求的 Header 名称，该 Header作为参数传递 JWT 令牌
+    userParamName: userId  # 用户登录认证用户名参数名称
+    pwdParamName: password  # 用户登录认证密码参数名称
+    useDefaultController: true # 是否使用默认的JwtAuthController
+    skipValidUrl: /auth/login,/auth/app/code2openid
