@@ -3,11 +3,15 @@ package com.fennel.aceinterview.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.fennel.aceinterview.acejwt.utils.JwtTokenUtil;
 import com.fennel.aceinterview.member.feign.StudyTimeFeignService;
 import com.fennel.common.utils.SecurityUtils;
+import com.fennel.common.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,7 @@ import com.fennel.common.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.api.R;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -112,12 +117,22 @@ public class MemberController {
      * 通过网关拿到 token 中的 userId，然后根据 userId 查询用户信息
      * @return
      */
+    @SentinelResource(value = "member_userInfo", blockHandler = "handleUserInfoBlock")
     @RequestMapping("/userinfo")
     public R<MemberEntity> info(){
+        //从requset中取
+
         // 从线程里面拿，依赖自定义拦截器
         String userId = SecurityUtils.getUserId();
         log.info("MemberController userId:{}", userId);
         MemberEntity member = memberService.getMemberByUserId(userId);
         return R.ok(member);
+    }
+
+    // 限流或降级时的处理方法
+    public R<MemberEntity> handleUserInfoBlock(BlockException ex) {
+        log.warn("接口 member_userInfo_api 被限流或降级了: {}", ex.getMessage());
+        // 返回一个友好的错误提示
+        return R.failed("服务暂时不可用，请稍后再试。");
     }
 }

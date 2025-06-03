@@ -84,7 +84,6 @@ public class JwtAuthController {
 
         //为了保证 refreshToken 只能用一次，刷新后，会从 redis 中删除。
         //如果用的不是 redis 中的 refreshToken 进行刷新令牌，则不能刷新。
-        //如果使用 redis 中已过期的 refreshToken 也不能刷新令牌。
         boolean isRefreshTokenNotExisted = jwtTokenUtil.isRefreshTokenNotExistCache(token);
         if(isRefreshTokenNotExisted){
             return buildErrorResponse(ResponseCodeEnum.REFRESH_TOKEN_INVALID);
