@@ -1,9 +1,13 @@
 package com.fennel.aceinterview.question.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,19 +28,53 @@ import com.fennel.common.utils.R;
  * @email fennel1@163.com
  * @date 2025-05-29 17:41:32
  */
+@Slf4j
 @RestController
 @RequestMapping("question/type")
 public class TypeController {
     @Autowired
     private TypeService typeService;
 
+    // 本地缓存
+    private Map<String, Object> cache = new HashMap<>();
+
     /**
-     * 列表
+     * 本地缓存查询类型列表
+     * @param params
+     * @return
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = typeService.queryPage(params);
+        // 查询本地缓存
+        PageUtils page = (PageUtils) cache.get("typeEntityList");
+        if (page == null) {
+            log.info("本地缓存为空");
+            // 从数据库中查询数据
+            page = typeService.queryPage(params);
+            cache.put("typeEntityList", page);
+        }
+        return R.ok().put("page", page);
+    }
 
+    /**
+     * Redis 缓存查询类型列表
+     * @param params
+     * @return
+     */
+    @RequestMapping("/listByRedis")
+    public R listByRedis(@RequestParam Map<String, Object> params){
+        PageUtils page = typeService.queryPageRedis(params);
+        return R.ok().put("page", page);
+    }
+
+    /**
+     * 缓存击穿 加锁
+     * @param params
+     * @return
+     */
+    @RequestMapping("/listByRedisLock")
+    public R listByRedisLock(@RequestParam Map<String, Object> params) {
+        PageUtils page = typeService.queryPageRedisLock(params);
         return R.ok().put("page", page);
     }
 

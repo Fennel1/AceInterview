@@ -23,6 +23,7 @@
         <module>ace-channel</module>
         <module>ace-gateway</module>
         <module>ace-auth</module>
+        <module>ace-search</module>
 
         <module>ace-common</module>
         <module>ace-jwt</module>

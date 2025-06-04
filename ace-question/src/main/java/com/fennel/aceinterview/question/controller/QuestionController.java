@@ -4,17 +4,14 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fennel.aceinterview.question.entity.QuestionEntity;
 import com.fennel.aceinterview.question.service.QuestionService;
 import com.fennel.common.utils.PageUtils;
 import com.fennel.common.utils.R;
 
+import javax.validation.Valid;
 
 
 /**
@@ -54,9 +51,9 @@ public class QuestionController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @RequestMapping(value="/save", method=RequestMethod.POST)
     public R save(@RequestBody QuestionEntity question){
-		questionService.save(question);
+		questionService.saveQuestion(question);
 
         return R.ok();
     }
@@ -64,9 +61,9 @@ public class QuestionController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @RequestMapping(value="/update", method=RequestMethod.POST)
     public R update(@RequestBody QuestionEntity question){
-		questionService.updateById(question);
+		questionService.updateQuestion(question);
 
         return R.ok();
     }
@@ -78,6 +75,13 @@ public class QuestionController {
     public R delete(@RequestBody Long[] ids){
 		questionService.removeByIds(Arrays.asList(ids));
 
+        return R.ok();
+    }
+
+    @RequestMapping(value="/create", method=RequestMethod.POST)
+    // mock create
+    public R create(@Valid @RequestBody QuestionEntity question){
+        questionService.createQuestion(question);
         return R.ok();
     }
 

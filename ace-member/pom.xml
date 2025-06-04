@@ -6,7 +6,6 @@
 		<groupId>com.fennel.aceinterview</groupId>
 		<artifactId>aceinterview</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-
 	</parent>
 
 	<artifactId>ace-member</artifactId>
