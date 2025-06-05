@@ -24,6 +24,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("question/question")
 public class QuestionController {
+
     @Autowired
     private QuestionService questionService;
 
@@ -38,13 +39,25 @@ public class QuestionController {
     }
 
 
+//    /**
+//     * 信息
+//     */
+//    @RequestMapping("/info/{id}")
+//    public R info(@PathVariable("id") Long id){
+//		QuestionEntity question = questionService.getById(id);
+//
+//        return R.ok().put("question", question);
+//    }
+
     /**
      * 信息
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-		QuestionEntity question = questionService.getById(id);
-
+        QuestionEntity question = questionService.getById(id);
+        if (question == null) {
+            return R.error(404, "Question not found");
+        }
         return R.ok().put("question", question);
     }
 
@@ -73,8 +86,8 @@ public class QuestionController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-		questionService.removeByIds(Arrays.asList(ids));
-
+//		questionService.removeByIds(Arrays.asList(ids));
+        questionService.deleteQuestion(ids);
         return R.ok();
     }
 

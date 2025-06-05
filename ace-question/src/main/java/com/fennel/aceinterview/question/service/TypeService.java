@@ -20,5 +20,7 @@ public interface TypeService extends IService<TypeEntity> {
     PageUtils queryPageRedis(Map<String, Object> params);
 
     PageUtils queryPageRedisLock(Map<String, Object> params);
+
+    PageUtils queryPageDLock6(Map<String, Object> params) throws InterruptedException;
 }
 

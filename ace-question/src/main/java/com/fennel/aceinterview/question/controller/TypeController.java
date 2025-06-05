@@ -78,6 +78,17 @@ public class TypeController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * Redisson 分布式锁
+     * @param params
+     * @return
+     */
+    @RequestMapping("/listByRedisson")
+    public R listByRedisson(@RequestParam Map<String, Object> params) throws InterruptedException {
+        PageUtils page = typeService.queryPageDLock6(params);
+        return R.ok().put("page", page);
+    }
+
 
     /**
      * 信息

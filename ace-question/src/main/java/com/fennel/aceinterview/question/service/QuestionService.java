@@ -21,6 +21,13 @@ public interface QuestionService extends IService<QuestionEntity> {
 
     boolean updateQuestion(QuestionEntity question);
 
+    boolean deleteQuestion(Long[] ids);
+
     boolean createQuestion(QuestionEntity question);
+
+    // 公开给外部调用，例如Controller中创建新问题后
+    void addQuestionIdToBloomFilter(Long id);
+
+    QuestionEntity getById(Long id);
 }
 
