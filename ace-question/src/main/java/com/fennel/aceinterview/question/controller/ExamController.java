@@ -1,20 +1,17 @@
 package com.fennel.aceinterview.question.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.baomidou.mybatisplus.extension.api.R;
+import com.fennel.aceinterview.question.dto.ExamPaperRandomRequestDto;
+import com.fennel.aceinterview.question.dto.ExamPaperSpecificRequestDto;
+import com.fennel.aceinterview.question.dto.ExamSubmissionRequestDto;
+import com.fennel.aceinterview.question.entity.ExamPaper;
+import com.fennel.aceinterview.question.entity.ExamSubmission;
+import com.fennel.aceinterview.question.service.ExamPaperService;
+import com.fennel.aceinterview.question.service.ExamSubmissionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fennel.aceinterview.question.entity.ExamEntity;
-import com.fennel.aceinterview.question.service.ExamService;
-import com.fennel.common.utils.PageUtils;
-import com.fennel.common.utils.R;
-
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -24,61 +21,50 @@ import com.fennel.common.utils.R;
  * @email fennel1@163.com
  * @date 2025-05-29 17:41:32
  */
+@Slf4j
 @RestController
 @RequestMapping("question/exam")
 public class ExamController {
+
     @Autowired
-    private ExamService examService;
+    private ExamPaperService examPaperService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = examService.queryPage(params);
+    @Autowired
+    private ExamSubmissionService examSubmissionService;
 
-        return R.ok().put("page", page);
+    @PostMapping("/genRandomExam")
+    public R generateRandomExam(@Validated @RequestBody ExamPaperRandomRequestDto dto) {
+        log.info("接收到随机生成试卷请求: {}", dto);
+        R<ExamPaper> result = examPaperService.generateRandomExamPaper(dto);
+        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
+            log.info("随机试卷生成成功，试卷ID: {}", result.getData() != null ? result.getData().getPaperId() : "N/A");
+        } else {
+            log.warn("随机试卷生成失败: {}", result.getMsg());
+        }
+        return result;
     }
 
-
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Integer id){
-		ExamEntity exam = examService.getById(id);
-
-        return R.ok().put("exam", exam);
+    @PostMapping("/generateSpecific")
+    public R<ExamPaper> generateSpecificExamPaper(@Validated @RequestBody ExamPaperSpecificRequestDto dto) {
+        log.info("接收到指定题目生成试卷请求: {}", dto);
+        R<ExamPaper> result = examPaperService.generateSpecificExamPaper(dto);
+        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
+            log.info("试卷生成成功，试卷ID: {}", result.getData() != null ? result.getData().getPaperId() : "N/A");
+        } else {
+            log.warn("试卷生成失败: {}", result.getMsg());
+        }
+        return result;
     }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    public R save(@RequestBody ExamEntity exam){
-		examService.save(exam);
-
-        return R.ok();
+    @PostMapping("/submit")
+    public R<ExamSubmission> submitExam(@Validated @RequestBody ExamSubmissionRequestDto submissionDto) {
+        log.info("Controller接收到试卷提交请求: {}", submissionDto);
+        R<ExamSubmission> result = examSubmissionService.submitExamPaper(submissionDto);
+        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
+            log.info("试卷提交处理成功，提交ID: {}", result.getData() != null ? result.getData().getSubmissionId() : "N/A");
+        } else {
+            log.warn("试卷提交处理失败: {}", result.getMsg());
+        }
+        return result;
     }
-
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    public R update(@RequestBody ExamEntity exam){
-		examService.updateById(exam);
-
-        return R.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Integer[] ids){
-		examService.removeByIds(Arrays.asList(ids));
-
-        return R.ok();
-    }
-
 }

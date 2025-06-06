@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fennel.aceinterview.question.dao.ExamSubmissionDao">
+
+    <resultMap id="BaseResultMap" type="com.fennel.aceinterview.question.entity.ExamSubmission">
+            <id property="submissionId" column="submission_id" />
+            <result property="paperId" column="paper_id" />
+            <result property="userId" column="user_id" />
+            <result property="answers" column="answers" />
+            <result property="startTime" column="start_time" />
+            <result property="submissionTime" column="submission_time" />
+            <result property="score" column="score" />
+            <result property="gradingDetails" column="grading_details" />
+            <result property="status" column="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        submission_id,paper_id,user_id,answers,start_time,submission_time,
+        score,grading_details,status
+    </sql>
+</mapper>

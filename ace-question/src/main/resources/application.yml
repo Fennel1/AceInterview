@@ -25,7 +25,10 @@ mybatis-plus:
 
 logging:
   level:
-    root: info
+    root: info # 保持根级别为 info，避免日志过多
+    org.springframework.cloud.sleuth: debug # 开启 Sleuth 的 DEBUG 级别日志
+    org.springframework.cloud.sleuth.zipkin: debug # 开启 Zipkin 客户端的 DEBUG 级别日志
+    zipkin: debug
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 

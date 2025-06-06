@@ -67,7 +67,6 @@ public class QuestionController {
     @RequestMapping(value="/save", method=RequestMethod.POST)
     public R save(@RequestBody QuestionEntity question){
 		questionService.saveQuestion(question);
-
         return R.ok();
     }
 
@@ -77,7 +76,6 @@ public class QuestionController {
     @RequestMapping(value="/update", method=RequestMethod.POST)
     public R update(@RequestBody QuestionEntity question){
 		questionService.updateQuestion(question);
-
         return R.ok();
     }
 

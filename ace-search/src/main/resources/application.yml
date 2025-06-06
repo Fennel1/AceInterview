@@ -1,0 +1,6 @@
+logging:
+  level:
+    root: info # 仅用于测试！测试完请改回 info
+    org.springframework.cloud.sleuth: debug
+    org.springframework.cloud.sleuth.zipkin: debug
+    zipkin: debug
