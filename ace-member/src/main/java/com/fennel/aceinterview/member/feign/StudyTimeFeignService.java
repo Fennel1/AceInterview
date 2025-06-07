@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface StudyTimeFeignService {
 
     @RequestMapping("study/studytime/member/list/test/{id}")
-    public R getMemberStudyTimeListTest(@PathVariable("id") Long id);
+    R getMemberStudyTimeListTest(@PathVariable("id") Long id);
 }

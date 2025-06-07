@@ -107,7 +107,7 @@ public class MemberController {
         memberEntity.setNickname("悟空聊架构");
 
         //远程调用拿到该用户的学习时长（学习时长是mock数据）
-//        R memberStudyTimeList = studyTimeFeignService.getMemberStudyTimeListTest(id);
+        studyTimeFeignService.getMemberStudyTimeListTest(id);
 //        return R.ok().put("member", memberEntity).put("studyTime", memberStudyTimeList.get("studyTime"));
         return R.ok("");
     }

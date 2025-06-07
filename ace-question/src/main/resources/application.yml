@@ -16,6 +16,11 @@ spring:
     password: 123456      # 如果设置了密码
     database: 1           # 默认数据库
     timeout: 5000         # 连接超时时间（单位毫秒）
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -41,3 +46,19 @@ app:
       custom:
         expected-insertions: 1000000
         fpp: 0.01
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: ""
+      group: DEFAULT_GROUP
+      apllication: seata-server
+      username: nacos
+      password: nacos
+  tx-service-group: ace
+  service:
+    vgroup-mapping:
+      ace: "default"
+  data-source-proxy-mode: AT

@@ -39,7 +39,7 @@ public class ViewLogEntity implements Serializable {
 	/**
 	 * 删除标记（0-正常，1-删除）
 	 */
-	private Integer delFlag;
+	private Long count;
 	/**
 	 * 创建时间
 	 */

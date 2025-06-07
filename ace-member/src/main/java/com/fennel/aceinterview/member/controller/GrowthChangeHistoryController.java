@@ -3,12 +3,9 @@ package com.fennel.aceinterview.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.fennel.common.to.member.GrowthChangeHistory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fennel.aceinterview.member.entity.GrowthChangeHistoryEntity;
 import com.fennel.aceinterview.member.service.GrowthChangeHistoryService;
@@ -64,12 +61,19 @@ public class GrowthChangeHistoryController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    public R update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
-		growthChangeHistoryService.updateById(growthChangeHistory);
-
+//    @RequestMapping("/update")
+//    public R update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
+//		growthChangeHistoryService.updateById(growthChangeHistory);
+//
+//        return R.ok();
+//    }
+    @PostMapping("/update")
+    public R update(@RequestBody GrowthChangeHistory growthChangeHistory) {
+        growthChangeHistoryService.update(growthChangeHistory);
         return R.ok();
     }
+
+
 
     /**
      * 删除

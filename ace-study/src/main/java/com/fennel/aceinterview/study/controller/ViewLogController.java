@@ -3,12 +3,9 @@ package com.fennel.aceinterview.study.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.fennel.common.to.study.ViewLog;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fennel.aceinterview.study.entity.ViewLogEntity;
 import com.fennel.aceinterview.study.service.ViewLogService;
@@ -64,10 +61,15 @@ public class ViewLogController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
-    public R update(@RequestBody ViewLogEntity viewLog){
-		viewLogService.updateById(viewLog);
-
+//    @RequestMapping("/update")
+//    public R update(@RequestBody ViewLogEntity viewLog){
+//		viewLogService.updateById(viewLog);
+//
+//        return R.ok();
+//    }
+    @PostMapping("update")
+    public R update(@RequestBody ViewLog viewLog){
+        viewLogService.update(viewLog);
         return R.ok();
     }
 

@@ -4,3 +4,10 @@ logging:
     org.springframework.cloud.sleuth: debug
     org.springframework.cloud.sleuth.zipkin: debug
     zipkin: debug
+
+spring:
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false

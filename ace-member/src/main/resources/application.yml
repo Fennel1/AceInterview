@@ -1,2 +1,25 @@
 server:
   port: 8200
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: ""
+      group: DEFAULT_GROUP
+      apllication: seata-server
+      username: nacos
+      password: nacos
+  tx-service-group: ace
+  service:
+    vgroup-mapping:
+      ace: "default"
+  data-source-proxy-mode: AT
+
+spring:
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false

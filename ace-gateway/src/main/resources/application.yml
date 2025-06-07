@@ -47,6 +47,11 @@ spring:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   profiles:
     include: jwt
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false
 
 server:
   port: 8050

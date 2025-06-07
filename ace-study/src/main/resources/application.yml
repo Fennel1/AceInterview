@@ -8,8 +8,16 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false
   application:
     name: ace-study
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -17,10 +25,26 @@ mybatis-plus:
     db-config:
       id-type: auto
 
-logging:
-  level:
-    com.alibaba.nacos: DEBUG
-    com.alibaba.cloud.nacos: DEBUG
+#logging:
+#  level:
+#    com.alibaba.nacos: DEBUG
+#    com.alibaba.cloud.nacos: DEBUG
 
 server:
   port: 8400
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: ""
+      group: DEFAULT_GROUP
+      apllication: seata-server
+      username: nacos
+      password: nacos
+  tx-service-group: ace
+  service:
+    vgroup-mapping:
+      ace: "default"
+  data-source-proxy-mode: AT

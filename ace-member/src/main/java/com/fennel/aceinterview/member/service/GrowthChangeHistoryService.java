@@ -1,6 +1,7 @@
 package com.fennel.aceinterview.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.fennel.common.to.member.GrowthChangeHistory;
 import com.fennel.common.utils.PageUtils;
 import com.fennel.aceinterview.member.entity.GrowthChangeHistoryEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface GrowthChangeHistoryService extends IService<GrowthChangeHistoryEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void update(GrowthChangeHistory growthChangeHistory);
 }
 

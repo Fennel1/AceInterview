@@ -15,6 +15,11 @@ spring:
         server-addr: 127.0.0.1:8848
   profiles:
     include: jwt
+  sleuth:
+    feign:
+      enabled: false
+  zipkin:
+    enabled: false
 
 server:
   port: 8800

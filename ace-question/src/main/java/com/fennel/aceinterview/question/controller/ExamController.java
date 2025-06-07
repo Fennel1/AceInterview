@@ -36,11 +36,6 @@ public class ExamController {
     public R generateRandomExam(@Validated @RequestBody ExamPaperRandomRequestDto dto) {
         log.info("接收到随机生成试卷请求: {}", dto);
         R<ExamPaper> result = examPaperService.generateRandomExamPaper(dto);
-        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
-            log.info("随机试卷生成成功，试卷ID: {}", result.getData() != null ? result.getData().getPaperId() : "N/A");
-        } else {
-            log.warn("随机试卷生成失败: {}", result.getMsg());
-        }
         return result;
     }
 
@@ -48,11 +43,6 @@ public class ExamController {
     public R<ExamPaper> generateSpecificExamPaper(@Validated @RequestBody ExamPaperSpecificRequestDto dto) {
         log.info("接收到指定题目生成试卷请求: {}", dto);
         R<ExamPaper> result = examPaperService.generateSpecificExamPaper(dto);
-        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
-            log.info("试卷生成成功，试卷ID: {}", result.getData() != null ? result.getData().getPaperId() : "N/A");
-        } else {
-            log.warn("试卷生成失败: {}", result.getMsg());
-        }
         return result;
     }
 
@@ -60,11 +50,6 @@ public class ExamController {
     public R<ExamSubmission> submitExam(@Validated @RequestBody ExamSubmissionRequestDto submissionDto) {
         log.info("Controller接收到试卷提交请求: {}", submissionDto);
         R<ExamSubmission> result = examSubmissionService.submitExamPaper(submissionDto);
-        if (result.getCode() == 200) { // 假设R.getCode() == 200 表示成功
-            log.info("试卷提交处理成功，提交ID: {}", result.getData() != null ? result.getData().getSubmissionId() : "N/A");
-        } else {
-            log.warn("试卷提交处理失败: {}", result.getMsg());
-        }
         return result;
     }
 }
