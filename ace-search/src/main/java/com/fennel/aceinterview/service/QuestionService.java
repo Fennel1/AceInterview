@@ -7,4 +7,5 @@ import java.io.IOException;
 public interface QuestionService {
 
     boolean save(QuestionEsModel questionEsModel) throws IOException;
+    boolean saveQuestion(QuestionEsModel esModel);
 }

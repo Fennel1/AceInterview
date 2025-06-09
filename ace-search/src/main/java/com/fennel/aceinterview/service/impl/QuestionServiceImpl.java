@@ -29,7 +29,17 @@ public class QuestionServiceImpl implements QuestionService {
         String s = JSON.toJSONString(questionEsModel);
         indexRequest.source(s, XContentType.JSON);
         IndexResponse response = elasticsearchClient.index(indexRequest, RequestOptions.DEFAULT);
-        log.info(response.toString());
+        log.info("ES索引操作结果: {}", response.getResult());
         return true;
+    }
+    
+    @Override
+    public boolean saveQuestion(QuestionEsModel esModel) {
+        try {
+            return save(esModel);
+        } catch (IOException e) {
+            log.error("保存问题到ES失败: {}", e.getMessage());
+            return false;
+        }
     }
 }

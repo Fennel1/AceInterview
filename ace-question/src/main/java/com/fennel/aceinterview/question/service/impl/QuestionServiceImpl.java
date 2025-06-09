@@ -11,6 +11,7 @@ import com.fennel.common.utils.R;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -53,6 +54,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
 
     @Autowired
     private RedissonClient redissonClient;
+    
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -68,7 +72,16 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
     public boolean saveQuestion(QuestionEntity question) {
         boolean saveResult = save(question);
         if (saveResult && question.getId() != null) {
-            saveEs(question);
+            // 先尝试同步保存到ES
+            try {
+//                throw new Exception("刻意发生错误");
+                saveEs(question);
+                log.info("ES同步保存成功，ID: {}", question.getId());
+            } catch (Exception e) {
+                log.error("ES同步保存失败，转为MQ异步: {}", e.getMessage());
+                // 发送MQ消息进行重试
+                sendRocketMQMessage(question);
+            }
             addQuestionIdToBloomFilterInternal(question.getId());
             log.info("新问题保存成功，ID {} 已添加到布隆过滤器。", question.getId());
         }
@@ -360,5 +373,32 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionDao, QuestionEntity
         // 如果等待后缓存仍然没有，或者业务允许直接查库（不推荐，可能导致DB压力）
         // return super.getById(id);
         return null; // 或抛出自定义异常表示临时不可用
+    }
+    
+    private void sendRocketMQMessage(QuestionEntity question) {
+        try {
+            // 转换为ES模型
+            QuestionEsModel esModel = convertToEsModel(question);
+            // 构建消息，将ES模型转换为JSON字符串
+            String message = JSON.toJSONString(esModel);
+            // 发送消息到指定Topic和Tag
+            rocketMQTemplate.syncSend("QUESTION_TOPIC:ES_RETRY", message);
+            log.info("问题ID {} 的ES重试消息发送成功", question.getId());
+        } catch (Exception e) {
+            log.error("问题ID {} 的ES重试消息发送失败: {}", question.getId(), e.getMessage());
+        }
+    }
+    
+    private QuestionEsModel convertToEsModel(QuestionEntity question) {
+        QuestionEsModel esModel = new QuestionEsModel();
+        BeanUtils.copyProperties(question, esModel);
+        
+        // 获取题目类型名称
+        TypeEntity typeEntity = typeService.getById(question.getType());
+        if (typeEntity != null) {
+            esModel.setTypeName(typeEntity.getType());
+        }
+        
+        return esModel;
     }
 }

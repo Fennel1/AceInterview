@@ -141,10 +141,6 @@ public class ExamSubmissionServiceImpl extends ServiceImpl<ExamSubmissionDao, Ex
             }
             submission.setAnswers(answersJsonString); // 存入序列化后的JSON字符串
             submission.setStartTime(submissionDto.getStartTime()); // 使用DTO中的startTime
-            // 对于 submissionTime:
-            // 方案1: 信任前端传递的 submissionTime
-            // submission.setSubmissionTime(submissionDto.getSubmissionTime());
-            // 方案2: 以服务器接收到的时间为准 (更可靠)
             submission.setSubmissionTime(new Date());
             submission.setStatus("SUBMITTED");
 
@@ -261,6 +257,7 @@ public class ExamSubmissionServiceImpl extends ServiceImpl<ExamSubmissionDao, Ex
 //                Thread.currentThread().interrupt();
 //                log.warn("模拟判卷服务调用被中断，Submission ID: {}", submission.getSubmissionId(), e);
 //            }
+
             // 6. 发送消息到 RocketMQ 进行异步判卷
             try {
                 // 构建消息体，通常只需要提交记录的ID，消费者可以根据ID查询详细信息

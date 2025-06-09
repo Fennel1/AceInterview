@@ -54,7 +54,6 @@ public class QuestionSearchServiceImpl implements QuestionSearchService {
         sourceBuilder.size(EsConstant.PAGE_SIZE);
 
         SearchRequest request = new SearchRequest(new String[] {EsConstant.QUESTION_INDEX}, sourceBuilder);
-
         try {
             // 2、执行检索
             searchResponse = elasticsearchClient.search(request, RequestOptions.DEFAULT);
